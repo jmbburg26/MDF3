@@ -1,5 +1,8 @@
+//////John Brandenburg////
+//////MDF3 1501///////////
 package com.bbgatestudios.mdf3app;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -28,6 +31,11 @@ public class MainActivity extends ActionBarActivity {
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
         builder.setContentTitle("Standard Notification Title");
         builder.setContentText("Standard notification message");
+        NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+        bigTextStyle.bigText("This is the place where I would put all of the really cool notification stuff for my application.");
+        bigTextStyle.setBigContentTitle("More Stuff");
+        bigTextStyle.setSummaryText("My Place For Really Cool Stuff");
+        builder.setStyle(bigTextStyle);
 
         noteManager.notify(STANDARD_NOTIFICATION, builder.build());
     }
