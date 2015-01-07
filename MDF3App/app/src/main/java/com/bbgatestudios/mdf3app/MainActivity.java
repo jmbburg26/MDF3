@@ -1,17 +1,35 @@
 package com.bbgatestudios.mdf3app;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    public static final int STANDARD_NOTIFICATION = 0x01001;
+    public static final int EXPANDED_NOTIFICATION = 0x01002;
+
+    private NotificationManager noteManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        noteManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_android_grey600_48dp);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        builder.setContentTitle("Standard Notification Title");
+        builder.setContentText("Standard notification message");
+
+        noteManager.notify(STANDARD_NOTIFICATION, builder.build());
     }
 
 
