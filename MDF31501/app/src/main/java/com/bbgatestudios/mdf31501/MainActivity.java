@@ -1,13 +1,18 @@
+/////John Brandenburg/////MDF 1501/////
+
 package com.bbgatestudios.mdf31501;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,7 +24,7 @@ import android.widget.Button;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPreparedListener{
+public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPreparedListener,ServiceConnection{
     public static final int STANDARD_NOTIFICATION = 0x01001;
     public static final int EXPANDED_NOTIFICATION = 0x01002;
     private static final int REQUEST_NOTIFY_LAUNCH = 0x02001;
@@ -76,16 +81,6 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         mPlayer.stop();
     };
 
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-
-    }
-
     public void startNotification(){
         // Assuming we're in a Context such as an Activity or Service.
         NotificationManager mgr =
@@ -137,8 +132,6 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         super.onStart();
 
         if(mPlayer == null) {
-            // Easy way: mPlayer = MediaPlayer.create(this, R.raw.something_elated);
-            // Easy way doesn't require a call to prepare or prepareAsync. Only works for resources.
 
             mPlayer = new MediaPlayer();
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -153,6 +146,9 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
                 mPlayer = null;
             }
         }
+
+        Intent intent = new Intent(this, AudioService.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -194,6 +190,8 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
             mPlayer.stop();
             mPrepared = false;
         }
+
+        unbindService(this);
     }
 
     @Override
@@ -212,5 +210,16 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         if(mPlayer != null && mActivityResumed) {
             mPlayer.seekTo(mAudioPosition);
         }
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        AudioService.AudioServiceBinder binder = (AudioService.AudioServiceBinder)service;
+        AudioService myService = binder.getService();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+
     }
 }

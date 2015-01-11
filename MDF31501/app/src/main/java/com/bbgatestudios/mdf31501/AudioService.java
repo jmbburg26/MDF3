@@ -1,3 +1,4 @@
+/////John Brandenburg/////MDF 1501/////
 package com.bbgatestudios.mdf31501;
 
 import android.app.Service;
@@ -21,10 +22,20 @@ public class AudioService extends Service {
             return AudioService.this;
         }
     }
+
+    AudioServiceBinder aBinder;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        aBinder = new AudioServiceBinder();
+
         Toast.makeText(this, "Service Created", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.ic_assignment_black_48dp);
@@ -34,11 +45,6 @@ public class AudioService extends Service {
         builder.setOngoing(true);
 
         startForeground(FOREGROUND_NOTIFICATION, builder.build());
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
         return Service.START_NOT_STICKY;
     }
 
@@ -49,7 +55,12 @@ public class AudioService extends Service {
     }
 
     @Override
+    public boolean onUnbind(Intent intent){
+        return super.onUnbind(intent);
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
-        return new AudioServiceBinder();
+        return aBinder;
     }
 }
