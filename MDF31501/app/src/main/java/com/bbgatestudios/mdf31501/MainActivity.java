@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.bbgatestudios.mdf31501.MainFragment;
+
 import java.io.IOException;
 
 
@@ -40,6 +42,12 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        if (savedInstanceState == null) {
+//            getFragmentManager().beginTransaction()
+//                    .add(R.id.container, new MainFragment())
+//                    .commit();
+//        }
 
 
         final Button noti_button = (Button) findViewById(R.id.button_notify);
