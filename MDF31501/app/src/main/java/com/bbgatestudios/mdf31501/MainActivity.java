@@ -22,18 +22,12 @@ import android.view.MenuItem;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPreparedListener, ServiceConnection, SongListFragment.Callbacks{
-    public static final int STANDARD_NOTIFICATION = 0x01001;
-    public static final int EXPANDED_NOTIFICATION = 0x01002;
-    private static final int REQUEST_NOTIFY_LAUNCH = 0x02001;
-    private static final String SAVE_POSITION = "MainActivity.SAVE_POSITION";
+public class MainActivity extends ActionBarActivity implements SongListFragment.Callbacks{
+
+
     public static final String SONG_BUNDLE = "SONG_BUNDLE";
     private static final int REQUEST_CODE = 1001;
 
-    MediaPlayer mPlayer;
-    boolean mActivityResumed;
-    boolean mPrepared;
-    int mAudioPosition;
 
 
     @Override
@@ -42,42 +36,6 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         setContentView(R.layout.activity_main);
 
     }
-
-    public void startService(){
-        Intent intent = new Intent(this, AudioService.class);
-        startService(intent);
-        mPlayer.start();
-    };
-
-    public void stopService(){
-        Intent intent = new Intent(this, AudioService.class);
-        stopService(intent);
-        mPlayer.stop();
-    };
-
-    public void startNotification(){
-        // Assuming we're in a Context such as an Activity or Service.
-        NotificationManager mgr =
-                (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_announcement_black_48dp);
-        builder.setLargeIcon(BitmapFactory.decodeResource(
-                getResources(), R.drawable.ic_launcher));
-        builder.setContentTitle("Little Notification Title");
-        builder.setContentText("Little Notification Message");
-        NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
-        bigStyle.bigText("This would be the place where I tell you about some cool stuff going on in the app");
-        bigStyle.setBigContentTitle("Big Important Title");
-        bigStyle.setSummaryText("Expanded Summary");
-        builder.setStyle(bigStyle);
-        mgr.notify(EXPANDED_NOTIFICATION, builder.build());
-
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, REQUEST_NOTIFY_LAUNCH, intent, 0);
-
-        builder.setContentIntent(pIntent);
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,102 +57,6 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if(mPlayer == null) {
-
-            mPlayer = new MediaPlayer();
-            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.setOnPreparedListener(this);
-
-            try {
-                mPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/raw/eye_of_the_tiger"));
-            } catch(IOException e) {
-                e.printStackTrace();
-
-                mPlayer.release();
-                mPlayer = null;
-            }
-        }
-
-        Intent intent = new Intent(this, AudioService.class);
-        bindService(intent, this, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(mPlayer != null) {
-            outState.putInt(SAVE_POSITION, mPlayer.getCurrentPosition());
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        mActivityResumed = true;
-        if(mPlayer != null && !mPrepared) {
-            mPlayer.prepareAsync();
-        } else if(mPlayer != null && mPrepared) {
-            mPlayer.seekTo(mAudioPosition);
-            mPlayer.start();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mActivityResumed = false;
-
-        if(mPlayer != null && mPlayer.isPlaying()) {
-            mPlayer.pause();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(mPlayer != null && mPlayer.isPlaying()) {
-            mPlayer.stop();
-            mPrepared = false;
-        }
-
-        unbindService(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if(mPlayer != null) {
-            mPlayer.release();
-        }
-    }
-
-    //@Override
-    public void onPrepared(MediaPlayer mp) {
-        mPrepared = true;
-
-        if(mPlayer != null && mActivityResumed) {
-            mPlayer.seekTo(mAudioPosition);
-        }
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-        AudioService.AudioServiceBinder binder = (AudioService.AudioServiceBinder)service;
-        AudioService myService = binder.getService();
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-
     }
 
     @Override
