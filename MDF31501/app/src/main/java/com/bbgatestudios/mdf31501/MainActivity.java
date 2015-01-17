@@ -43,38 +43,40 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (savedInstanceState == null) {
-//            getFragmentManager().beginTransaction()
-//                    .add(R.id.container, new MainFragment())
-//                    .commit();
-//        }
+        MainFragment frag = new MainFragment();
+
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container,frag)
+                    .commit();
+        }
 
 
-        final Button noti_button = (Button) findViewById(R.id.button_notify);
-        noti_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startNotification();
-            }
-        });
-
-        final Button start_service_button = (Button) findViewById(R.id.button_service_start);
-        start_service_button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                startService();
-            }
-        });
-
-        final Button stop_service_button = (Button) findViewById(R.id.button_service_stop);
-        stop_service_button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                stopService();
-            }
-        });
+//        final Button noti_button = (Button) findViewById(R.id.button_notify);
+//        noti_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startNotification();
+//            }
+//        });
+//
+//        final Button start_service_button = (Button) findViewById(R.id.button_service_start);
+//        start_service_button.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                startService();
+//            }
+//        });
+//
+//        final Button stop_service_button = (Button) findViewById(R.id.button_service_stop);
+//        stop_service_button.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                stopService();
+//            }
+//        });
     }
 
     public void startService(){
