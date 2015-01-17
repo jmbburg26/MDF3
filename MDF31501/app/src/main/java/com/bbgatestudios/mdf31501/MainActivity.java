@@ -42,41 +42,7 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        MainFragment frag = new MainFragment();
-
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container,frag)
-                    .commit();
-        }
-
-
-//        final Button noti_button = (Button) findViewById(R.id.button_notify);
-//        noti_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startNotification();
-//            }
-//        });
-//
-//        final Button start_service_button = (Button) findViewById(R.id.button_service_start);
-//        start_service_button.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                startService();
-//            }
-//        });
-//
-//        final Button stop_service_button = (Button) findViewById(R.id.button_service_stop);
-//        stop_service_button.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                stopService();
-//            }
-//        });
+        
     }
 
     public void startService(){
@@ -148,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
             mPlayer.setOnPreparedListener(this);
 
             try {
-                mPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/raw/he_saw_it_all"));
+                mPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/raw/eye_of_the_tiger"));
             } catch(IOException e) {
                 e.printStackTrace();
 
