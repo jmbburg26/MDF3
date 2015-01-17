@@ -24,11 +24,12 @@ import java.util.List;
 /**
  * Created by John on 1/11/2015.
  */
-public class MainFragment extends ListFragment{
+public class SongListFragment extends ListFragment{
 
     List<Song> songs = new SongData().getSongs();
 
-    public MainFragment(){
+    private Callbacks activity;
+    public SongListFragment(){
 
     }
 
@@ -46,5 +47,21 @@ public class MainFragment extends ListFragment{
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         return rootView;
+    }
+
+    public interface Callbacks {
+        public void onItemSelected(Song song);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id){
+        Song song = songs.get(position);
+        activity.onItemSelected(song);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (Callbacks) activity;
     }
 }

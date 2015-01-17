@@ -18,19 +18,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
-import com.bbgatestudios.mdf31501.MainFragment;
 
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPreparedListener,ServiceConnection{
+public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPreparedListener, ServiceConnection, SongListFragment.Callbacks{
     public static final int STANDARD_NOTIFICATION = 0x01001;
     public static final int EXPANDED_NOTIFICATION = 0x01002;
     private static final int REQUEST_NOTIFY_LAUNCH = 0x02001;
     private static final String SAVE_POSITION = "MainActivity.SAVE_POSITION";
+    public static final String SONG_BUNDLE = "SONG_BUNDLE";
+    private static final int REQUEST_CODE = 1001;
 
     MediaPlayer mPlayer;
     boolean mActivityResumed;
@@ -42,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
     }
 
     public void startService(){
@@ -197,5 +195,13 @@ public class MainActivity extends ActionBarActivity implements MediaPlayer.OnPre
     @Override
     public void onServiceDisconnected(ComponentName name) {
 
+    }
+
+    @Override
+    public void onItemSelected(Song song) {
+        Bundle b = song.toBundle();
+        Intent intent = new Intent(this, SongDetailActivity.class);
+        intent.putExtra(SONG_BUNDLE, b);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 }

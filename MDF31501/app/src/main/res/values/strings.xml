@@ -4,5 +4,6 @@
     <string name="app_name">MDF3 1501</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="placeholder">Placeholder Text</string>
 
 </resources>

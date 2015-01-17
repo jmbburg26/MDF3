@@ -16,6 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SongDetailActivity" />
         <service android:name="com.bbgatestudios.mdf31501.AudioService"
             android:exported="false" />
     </application>
