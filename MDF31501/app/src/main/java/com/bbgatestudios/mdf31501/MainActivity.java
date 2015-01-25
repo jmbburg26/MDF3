@@ -2,18 +2,9 @@
 
 package com.bbgatestudios.mdf31501;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.BitmapFactory;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;

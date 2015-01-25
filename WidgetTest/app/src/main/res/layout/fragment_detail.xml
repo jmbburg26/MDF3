@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/detailFirstLabel"
+                android:text="@string/fnametext"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/detailFirst"/>
+        </TableRow>
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/detailLastLabel"
+                android:text="@string/lnametext"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/detailLast"/>
+        </TableRow>
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/detailEmailLabel"
+                android:text="@string/emailtext"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/detailEmail"/>
+        </TableRow>
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/detailPhoneLabel"
+                android:text="@string/phonetext"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/detailPhone"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
